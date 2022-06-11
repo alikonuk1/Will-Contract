@@ -20,7 +20,7 @@ contract WillFactory {
 
 contract Will {
     address public willUser;
-    address public builderDao = 0x0000000000000000000000000000000000000001;
+    address public Dao = 0x0000000000000000000000000000000000000001;
     uint256 public expiration;
     address[] private _guardians;
     
@@ -107,7 +107,7 @@ contract Will {
 
     function payCommission(uint commissionAmount) private {     
         console.log("Paying the commission of amount %s ", commissionAmount);
-        (bool sent, bytes memory data) = builderDao.call{value: commissionAmount}("");
+        (bool sent, bytes memory data) = Dao.call{value: commissionAmount}("");
         require(sent, "Failed to send Ether");      
         getBalance(); 
     }
