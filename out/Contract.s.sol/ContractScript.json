@@ -1,0 +1,330 @@
+{
+  "abi": [
+    {
+      "inputs": [],
+      "name": "run",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "setUp",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "vm",
+      "outputs": [
+        {
+          "internalType": "contract Vm",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x608060405234801561001057600080fd5b506101b0806100206000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c80630a9254e4146100465780633a76846314610048578063c04062261461007f575b600080fd5b005b610063737109709ecfa91a80626ff3989d68f67f5b1dd12d81565b6040516001600160a01b03909116815260200160405180910390f35b610046604080516302bf260160e61b81529051737109709ecfa91a80626ff3989d68f67f5b1dd12d9163afc9804091600480830192600092919082900301818387803b1580156100ce57600080fd5b505af11580156100e2573d6000803e3d6000fd5b505050506040516100f290610112565b604051809103906000f08015801561010e573d6000803e3d6000fd5b5050565b605c8061011f8339019056fe6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220643a70abc7c1f8c3190e43bb0960c1142cb47ce5417afbd0d2e9151dad9d231b64736f6c634300080e0033a26469706673582212202f3d775423cafd2c3c8b91f36e5d2845a0a6fe9b142e8a05df4f45edd509781f64736f6c634300080e0033",
+    "sourceMap": "141:151:6:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c80630a9254e4146100465780633a76846314610048578063c04062261461007f575b600080fd5b005b610063737109709ecfa91a80626ff3989d68f67f5b1dd12d81565b6040516001600160a01b03909116815260200160405180910390f35b610046604080516302bf260160e61b81529051737109709ecfa91a80626ff3989d68f67f5b1dd12d9163afc9804091600480830192600092919082900301818387803b1580156100ce57600080fd5b505af11580156100e2573d6000803e3d6000fd5b505050506040516100f290610112565b604051809103906000f08015801561010e573d6000803e3d6000fd5b5050565b605c8061011f8339019056fe6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220643a70abc7c1f8c3190e43bb0960c1142cb47ce5417afbd0d2e9151dad9d231b64736f6c634300080e0033a26469706673582212202f3d775423cafd2c3c8b91f36e5d2845a0a6fe9b142e8a05df4f45edd509781f64736f6c634300080e0033",
+    "sourceMap": "141:151:6:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;181:26;;288:38:1;;217:64;288:38;;;;;-1:-1:-1;;;;;189:32:9;;;171:51;;159:2;144:18;288:38:1;;;;;;;213:77:6;;245:14;;;-1:-1:-1;;;245:14:6;;;;217:64:1;;245:12:6;;:14;;;;;241:37:1;;245:14:6;;;;;;;241:37:1;217:64;245:14:6;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;269;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;213:77::o;-1:-1:-1:-;;;;;;;;:::o",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "run()": "c0406226",
+    "setUp()": "0a9254e4",
+    "vm()": "3a768463"
+  },
+  "ast": {
+    "absolutePath": "script/Contract.s.sol",
+    "id": 20917,
+    "exportedSymbols": {
+      "Contract": [
+        20919
+      ],
+      "ContractScript": [
+        20916
+      ],
+      "Script": [
+        1815
+      ],
+      "Vm": [
+        4762
+      ],
+      "console": [
+        12826
+      ],
+      "console2": [
+        20890
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:254:6",
+    "nodes": [
+      {
+        "id": 20892,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:6",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      },
+      {
+        "id": 20893,
+        "nodeType": "ImportDirective",
+        "src": "65:30:6",
+        "absolutePath": "lib/forge-std/src/Script.sol",
+        "file": "forge-std/Script.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 20917,
+        "sourceUnit": 1816,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 20895,
+        "nodeType": "ImportDirective",
+        "src": "97:42:6",
+        "absolutePath": "src/Contract.sol",
+        "file": "src/Contract.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 20917,
+        "sourceUnit": 20920,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 20894,
+              "name": "Contract",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 20919,
+              "src": "105:8:6",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 20916,
+        "nodeType": "ContractDefinition",
+        "src": "141:151:6",
+        "nodes": [
+          {
+            "id": 20901,
+            "nodeType": "FunctionDefinition",
+            "src": "181:26:6",
+            "body": {
+              "id": 20900,
+              "nodeType": "Block",
+              "src": "205:2:6",
+              "statements": []
+            },
+            "functionSelector": "0a9254e4",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setUp",
+            "nameLocation": "190:5:6",
+            "parameters": {
+              "id": 20898,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "195:2:6"
+            },
+            "returnParameters": {
+              "id": 20899,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "205:0:6"
+            },
+            "scope": 20916,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "id": 20915,
+            "nodeType": "FunctionDefinition",
+            "src": "213:77:6",
+            "body": {
+              "id": 20914,
+              "nodeType": "Block",
+              "src": "235:55:6",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "expression": {
+                        "id": 20904,
+                        "name": "vm",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1814,
+                        "src": "245:2:6",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Vm_$4762",
+                          "typeString": "contract Vm"
+                        }
+                      },
+                      "id": 20906,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "broadcast",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 4745,
+                      "src": "245:12:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_nonpayable$__$returns$__$",
+                        "typeString": "function () external"
+                      }
+                    },
+                    "id": 20907,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "245:14:6",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 20908,
+                  "nodeType": "ExpressionStatement",
+                  "src": "245:14:6"
+                },
+                {
+                  "expression": {
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 20911,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "NewExpression",
+                      "src": "269:12:6",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_creation_nonpayable$__$returns$_t_contract$_Contract_$20919_$",
+                        "typeString": "function () returns (contract Contract)"
+                      },
+                      "typeName": {
+                        "id": 20910,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 20909,
+                          "name": "Contract",
+                          "nodeType": "IdentifierPath",
+                          "referencedDeclaration": 20919,
+                          "src": "273:8:6"
+                        },
+                        "referencedDeclaration": 20919,
+                        "src": "273:8:6",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_Contract_$20919",
+                          "typeString": "contract Contract"
+                        }
+                      }
+                    },
+                    "id": 20912,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "269:14:6",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_Contract_$20919",
+                      "typeString": "contract Contract"
+                    }
+                  },
+                  "id": 20913,
+                  "nodeType": "ExpressionStatement",
+                  "src": "269:14:6"
+                }
+              ]
+            },
+            "functionSelector": "c0406226",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "run",
+            "nameLocation": "222:3:6",
+            "parameters": {
+              "id": 20902,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "225:2:6"
+            },
+            "returnParameters": {
+              "id": 20903,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "235:0:6"
+            },
+            "scope": 20916,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 20896,
+              "name": "Script",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 1815,
+              "src": "168:6:6"
+            },
+            "id": 20897,
+            "nodeType": "InheritanceSpecifier",
+            "src": "168:6:6"
+          }
+        ],
+        "canonicalName": "ContractScript",
+        "contractDependencies": [
+          20919
+        ],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          20916,
+          1815
+        ],
+        "name": "ContractScript",
+        "nameLocation": "150:14:6",
+        "scope": 20917,
+        "usedErrors": []
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 6
+}
