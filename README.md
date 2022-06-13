@@ -16,59 +16,33 @@ or
 yarn
 ```
 
-# Compile
-
-## Foundry
+# Foundry
 
 ```shell
 forge build
 ```
-
-## Hardhat
-
-```shell
-npx hardhat compile
-```
-
-# Test
-
-## Foundry
-
 ```shell
 forge test
 ```
-
-## Hardhat
-
-```shell
-npx hardhat test
-```
-
-# Deploy
-
-## Foundry
-
 ```shell
 forge create --rpc-url <your_rpc_url> --private-key <your_private_key> src/WillFactory.sol:WillFactory
 ```
-
-## Hardhat
-
-```shell
-npx hardhat run scripts/deploy.js --network mumbai
-```
-
-# Verify
-
-## Foundry
-
 ```shell
 # for chain id = https://evm-chainlist.netlify.app/
 forge verify-contract --chain-id 80001 CONTRACT_ADDRESS src/WillFactory.sol:WillFactory API_KEY
 ```
 
-## Hardhat
+# Hardhat
 
+```shell
+npx hardhat compile
+```
+```shell
+npx hardhat test
+```
+```shell
+npx hardhat run scripts/deploy.js --network mumbai
+```
 ```shell
 npx hardhat verify <deployed_contracts_address> --contract contracts/WillFactory.sol:WillFactory --network mumbai
 ```
