@@ -2,7 +2,7 @@
 
 You'll need the following:
 
-- `RPC URL`: A URL to connect to the blockchain. You can get one for free from [Ankr](https://www.ankr.com/protocol/).
+- `RPC URL`: A URL to connect to the blockchain. You can get public rpc's from [Ankr](https://www.ankr.com/protocol/).
 - `PRIVATE_KEY`: A private key from your wallet. You can get a private key from a new [Metamask](https://metamask.io/) account.
 - `API_KEY`: A key to to verify our contract. You can get one from a desired chains block explorer.
 
