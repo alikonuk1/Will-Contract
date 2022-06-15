@@ -1,7 +1,8 @@
-//SPDX-License-Identifier: Unlicense
+// SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-import "hardhat/console.sol";
+//import "hardhat/console.sol";
+import "forge-std/console.sol";
 
 contract WillFactory {
 
@@ -47,6 +48,7 @@ contract Will {
 
     // Check if time is over.
     function isExpired() public view returns (bool) {
+        console.log("Is expired?", isExpired());
         return block.timestamp >= expiration;
     }
 
@@ -57,6 +59,7 @@ contract Will {
     
     // How much time left.
     function timeLeft() public view onlyOwner returns (uint256) {
+        console.log("Time left:", timeLeft());
         return expiration - block.timestamp;
     }
 

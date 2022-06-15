@@ -7,12 +7,12 @@ You'll need the following:
 - `API_KEY`: A key to to verify our contract. You can get one from a desired chains block explorer.
 
 ```shell
-npm install
+forge install
 ```
 
-or
-
 ```shell
+npm install
+#or
 yarn
 ```
 
