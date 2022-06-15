@@ -48,7 +48,6 @@ contract Will {
 
     // Check if time is over.
     function isExpired() public view returns (bool) {
-        console.log("Is expired?", isExpired());
         return block.timestamp >= expiration;
     }
 
@@ -59,7 +58,6 @@ contract Will {
     
     // How much time left.
     function timeLeft() public view onlyOwner returns (uint256) {
-        console.log("Time left:", timeLeft());
         return expiration - block.timestamp;
     }
 
@@ -82,17 +80,23 @@ contract Will {
     }
 
     // ***
-    function ownershipTransfer(address _guardian, address superGuardian) external {
+    function ownershipTransfer(address _guardian, address superGuardian) external payable {
         guardianData storage _guardianA = guardianInfo[_guardian];
         require (isExpired() == true, "Not Expired");
         require(_guardianA.isGuardian, "Not Guardian");
         superGuardian = _guardian;
         finalizeWill(superGuardian);
     }
-
+    
+    /**
+    
+    After the expration date
+    
+    */
+    
     // ***
     function finalizeWill(address superGuardian) private {
-//        require (isExpired() == true, "Not Expired");
+        //require (isExpired() == true, "Not Expired");
         require (msg.sender == superGuardian, "Not guardian");
         uint commissionAmount = address(willUser).balance * 2 / 100;
         payCommission(commissionAmount);
@@ -103,15 +107,19 @@ contract Will {
     // 
     function sendAssets(address superGuardian) private {
         console.log("Sending willUser balance to guardians:", address(willUser).balance);
+        
+        //
         (bool sent, bytes memory data) = superGuardian.call{value: address(willUser).balance}("");
-        require(sent, "Failed to send Ether");
+        require(sent, "Failed to send Ether to guardians");
         getBalance();
     }
 
     function payCommission(uint commissionAmount) private {     
         console.log("Paying the commission of amount %s ", commissionAmount);
+        
+        //
         (bool sent, bytes memory data) = Dao.call{value: commissionAmount}("");
-        require(sent, "Failed to send Ether");      
+        require(sent, "Failed to send Ether for commision");      
         getBalance(); 
     }
 }

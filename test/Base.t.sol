@@ -13,6 +13,7 @@ contract BaseTest is Test {
 
     Utilities utilities;
     
+    address factoryOwner;
     address willUser;
     address guardian;
     address user;
@@ -22,13 +23,14 @@ contract BaseTest is Test {
         utilities = new Utilities();
 
         address payable[] memory users = utilities.createUsers(3);
-        willUser = users[0];
-        guardian = users[1];
-        user = users[2];
+        factoryOwner = users[0];
+        willUser = users[1];
+        guardian = users[2];
+        user = users[3];
 
-        // owner is the user deploying the Will contract
-        vm.prank(willUser);
-        will = new Will();
+        // 
+        vm.prank(factoryOwner);
+        willFactory = new WillFactory();
 
         assertEq(will.willUser(), willUser);
         assertEq(will.expiration(), 0);
