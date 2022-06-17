@@ -2,7 +2,7 @@
 src = 'src'
 out = 'out'
 libs = ["node_modules", "lib"]
-solc_version = '0.8.0'
+solc_version = '0.8.10'
 remappings = [
     '@ensdomains/=node_modules/@ensdomains/',
     'hardhat/=node_modules/hardhat/',

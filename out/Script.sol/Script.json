@@ -67,6 +67,7 @@
         "src": "71:18:1",
         "absolutePath": "lib/forge-std/src/Vm.sol",
         "file": "./Vm.sol",
+        "nameLocation": "-1:-1:-1",
         "scope": 1816,
         "sourceUnit": 4763,
         "symbolAliases": [],
@@ -78,6 +79,7 @@
         "src": "90:23:1",
         "absolutePath": "lib/forge-std/src/console.sol",
         "file": "./console.sol",
+        "nameLocation": "-1:-1:-1",
         "scope": 1816,
         "sourceUnit": 12827,
         "symbolAliases": [],
@@ -89,6 +91,7 @@
         "src": "114:24:1",
         "absolutePath": "lib/forge-std/src/console2.sol",
         "file": "./console2.sol",
+        "nameLocation": "-1:-1:-1",
         "scope": 1816,
         "sourceUnit": 20891,
         "symbolAliases": [],
@@ -106,6 +109,7 @@
             "constant": true,
             "mutability": "constant",
             "name": "VM_ADDRESS",
+            "nameLocation": "196:10:1",
             "scope": 1815,
             "stateVariable": true,
             "storageLocation": "default",
@@ -362,6 +366,7 @@
             "functionSelector": "3a768463",
             "mutability": "constant",
             "name": "vm",
+            "nameLocation": "307:2:1",
             "scope": 1815,
             "stateVariable": true,
             "storageLocation": "default",
@@ -439,6 +444,7 @@
         ],
         "abstract": true,
         "baseContracts": [],
+        "canonicalName": "Script",
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
@@ -446,7 +452,9 @@
           1815
         ],
         "name": "Script",
-        "scope": 1816
+        "nameLocation": "158:6:1",
+        "scope": 1816,
+        "usedErrors": []
       }
     ],
     "license": "Unlicense"

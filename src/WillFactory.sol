@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.10;
 
 //import "hardhat/console.sol";
 import "forge-std/console.sol";
@@ -43,7 +43,7 @@ contract Will {
 
     constructor(address _willUser, uint256 _expiration) {
         willUser = _willUser;
-        expiration = block.timestamp + _expiration; // @TODO refactor -manny
+        expiration = block.timestamp + _expiration; //
     }
 
     // Check if time is over.
