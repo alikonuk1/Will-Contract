@@ -5,31 +5,39 @@ pragma solidity ^0.8.10;
 import "forge-std/console.sol";
 
 contract WillFactory {
+    
+    address payable public Dao;
 
-    event NewWill(address, address);
+    event NewWill(address, address, address);
+
+    constructor(address payable _dao) {
+        Dao = _dao;
+    }
 
     function getCurrentTime() public view returns (uint256) {
         return block.timestamp;
     }
 
     function buildWill(address willUser, uint256 expiration) public payable {
-        Will w = new Will(willUser, expiration);
-        console.log(address(w));
-        emit NewWill(willUser, address(w));
+        Will w = new Will(willUser, expiration, Dao);
+        console.log("Will contract:", address(w));
+        console.log("Dao contract:", address(Dao));
+        emit NewWill(willUser, address(w), Dao);
     }
 }
 
 contract Will {
     address public willUser;
-    address public Dao = 0x0000000000000000000000000000000000000001;
     uint256 public expiration;
     address[] private _guardians;
-    
+    address public Dao;
+
     struct guardianData {
         bool isGuardian; 
     }
 
     mapping(address => guardianData) public guardianInfo;
+    mapping(address => uint) public balances;
 
     modifier onlyOwner() {
         require (msg.sender == willUser, "Unauthorized");
@@ -41,9 +49,10 @@ contract Will {
         _;
     }
 
-    constructor(address _willUser, uint256 _expiration) {
+    constructor(address _willUser, uint256 _expiration, address _dao) {
         willUser = _willUser;
         expiration = block.timestamp + _expiration; //
+        Dao = _dao;
     }
 
     // Check if time is over.
@@ -78,15 +87,6 @@ contract Will {
         console.log("contract balance:", address(willUser).balance);
         return address(willUser).balance;
     }
-
-    // ***
-    function ownershipTransfer(address _guardian, address superGuardian) external payable {
-        guardianData storage _guardianA = guardianInfo[_guardian];
-        require (isExpired() == true, "Not Expired");
-        require(_guardianA.isGuardian, "Not Guardian");
-        superGuardian = _guardian;
-        finalizeWill(superGuardian);
-    }
     
     /**
     
@@ -94,6 +94,14 @@ contract Will {
     
     */
     
+    // ***
+    function ownershipTransfer(address _guardian, address superGuardian) external payable {
+        guardianData storage _guardianA = guardianInfo[_guardian];
+        require (isExpired() == true, "Not Expired");
+        require(_guardianA.isGuardian, "Not Guardian");
+        superGuardian = _guardian;
+    }
+
     // ***
     function finalizeWill(address superGuardian) private {
         //require (isExpired() == true, "Not Expired");
@@ -104,11 +112,8 @@ contract Will {
         getBalance();
     }
 
-    // 
     function sendAssets(address superGuardian) private {
         console.log("Sending willUser balance to guardians:", address(willUser).balance);
-        
-        //
         (bool sent, bytes memory data) = superGuardian.call{value: address(willUser).balance}("");
         require(sent, "Failed to send Ether to guardians");
         getBalance();
@@ -116,10 +121,22 @@ contract Will {
 
     function payCommission(uint commissionAmount) private {     
         console.log("Paying the commission of amount %s ", commissionAmount);
-        
-        //
         (bool sent, bytes memory data) = Dao.call{value: commissionAmount}("");
         require(sent, "Failed to send Ether for commision");      
         getBalance(); 
     }
+    /***
+    function transfer(address superGuardian) public {
+        require(balances[willUser] >= address(willUser).balance, "Insufficient funds");
+        emit Transfer(willUser, superGuardian, address(willUser).balance);
+        balances[willUser] -= address(willUser).balance;
+        balances[superGuardian] += address(willUser).balance;
+    }
+
+    function shutdown(address superGuardian) private {
+        require(msg.sender == superGuardian, "Access denied");
+        require (isExpired() == true, "Not Expired");
+        selfdestruct(payable(Dao));
+    }
+    */
 }
