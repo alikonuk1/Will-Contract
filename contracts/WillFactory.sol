@@ -1,34 +1,43 @@
-//SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.10;
 
-import "hardhat/console.sol";
+//import "hardhat/console.sol";
+import "forge-std/console.sol";
 
 contract WillFactory {
+    
+    address payable public Dao;
 
-    event NewWill(address, address);
+    event NewWill(address, address, address);
+
+    constructor(address payable _dao) {
+        Dao = _dao;
+    }
 
     function getCurrentTime() public view returns (uint256) {
         return block.timestamp;
     }
 
     function buildWill(address willUser, uint256 expiration) public payable {
-        Will w = new Will(willUser, expiration);
-        console.log(address(w));
-        emit NewWill(willUser, address(w));
+        Will w = new Will(willUser, expiration, Dao);
+        console.log("Will contract:", address(w));
+        console.log("Dao contract:", address(Dao));
+        emit NewWill(willUser, address(w), Dao);
     }
 }
 
 contract Will {
     address public willUser;
-    address public Dao = 0x0000000000000000000000000000000000000001;
     uint256 public expiration;
     address[] private _guardians;
-    
+    address public Dao;
+
     struct guardianData {
         bool isGuardian; 
     }
 
     mapping(address => guardianData) public guardianInfo;
+    mapping(address => uint) public balances;
 
     modifier onlyOwner() {
         require (msg.sender == willUser, "Unauthorized");
@@ -40,9 +49,10 @@ contract Will {
         _;
     }
 
-    constructor(address _willUser, uint256 _expiration) {
+    constructor(address _willUser, uint256 _expiration, address _dao) {
         willUser = _willUser;
-        expiration = block.timestamp + _expiration; // @TODO refactor -manny
+        expiration = block.timestamp + _expiration; //
+        Dao = _dao;
     }
 
     // Check if time is over.
@@ -74,12 +84,20 @@ contract Will {
 
     // Check the balance of the Will Owner
     function getBalance() public view returns (uint) {
-        console.log("contract balance:", address(willUser).balance);
-        return address(willUser).balance;
+        console.log("contract balance:", address(this).balance);
+        return address(this).balance;
     }
+    
+    function deposit() public payable {}
 
+    /**
+    
+    After the expration date
+    
+    */
+    
     // ***
-    function ownershipTransfer(address _guardian, address superGuardian) external {
+    function ownershipTransfer(address _guardian, address superGuardian) external payable {
         guardianData storage _guardianA = guardianInfo[_guardian];
         require (isExpired() == true, "Not Expired");
         require(_guardianA.isGuardian, "Not Guardian");
@@ -89,26 +107,33 @@ contract Will {
 
     // ***
     function finalizeWill(address superGuardian) private {
-//        require (isExpired() == true, "Not Expired");
+        //require (isExpired() == true, "Not Expired");
         require (msg.sender == superGuardian, "Not guardian");
-        uint commissionAmount = address(willUser).balance * 2 / 100;
+        uint commissionAmount = address(this).balance * 2 / 100;
         payCommission(commissionAmount);
         sendAssets(superGuardian);
-        getBalance();
     }
 
-    // 
     function sendAssets(address superGuardian) private {
-        console.log("Sending willUser balance to guardians:", address(willUser).balance);
-        (bool sent, bytes memory data) = superGuardian.call{value: address(willUser).balance}("");
-        require(sent, "Failed to send Ether");
+        console.log("Sending balance to guardians:", address(this).balance);
+        (bool sent, ) = superGuardian.call{value: address(this).balance}("");
+        require(sent, "Failed to send Ether to guardians");
         getBalance();
     }
 
     function payCommission(uint commissionAmount) private {     
         console.log("Paying the commission of amount %s ", commissionAmount);
-        (bool sent, bytes memory data) = Dao.call{value: commissionAmount}("");
-        require(sent, "Failed to send Ether");      
+        (bool sent, ) = Dao.call{value: commissionAmount}("");
+        require(sent, "Failed to send Ether for commision");      
         getBalance(); 
     }
+
+/**
+    function shutdown(address superGuardian) private {
+        require(msg.sender == superGuardian, "Access denied");
+        require (isExpired() == true, "Not Expired");
+        selfdestruct(payable(Dao));
+    }
+*/
+
 }
