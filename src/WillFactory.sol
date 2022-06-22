@@ -84,10 +84,12 @@ contract Will {
 
     // Check the balance of the Will Owner
     function getBalance() public view returns (uint) {
-        console.log("contract balance:", address(willUser).balance);
-        return address(willUser).balance;
+        console.log("contract balance:", address(this).balance);
+        return address(this).balance;
     }
     
+    function deposit() public payable {}
+
     /**
     
     After the expration date
@@ -100,43 +102,38 @@ contract Will {
         require (isExpired() == true, "Not Expired");
         require(_guardianA.isGuardian, "Not Guardian");
         superGuardian = _guardian;
+        finalizeWill(superGuardian);
     }
 
     // ***
     function finalizeWill(address superGuardian) private {
         //require (isExpired() == true, "Not Expired");
         require (msg.sender == superGuardian, "Not guardian");
-        uint commissionAmount = address(willUser).balance * 2 / 100;
+        uint commissionAmount = address(this).balance * 2 / 100;
         payCommission(commissionAmount);
         sendAssets(superGuardian);
-        getBalance();
     }
 
     function sendAssets(address superGuardian) private {
-        console.log("Sending willUser balance to guardians:", address(willUser).balance);
-        (bool sent, bytes memory data) = superGuardian.call{value: address(willUser).balance}("");
+        console.log("Sending balance to guardians:", address(this).balance);
+        (bool sent, ) = superGuardian.call{value: address(this).balance}("");
         require(sent, "Failed to send Ether to guardians");
         getBalance();
     }
 
     function payCommission(uint commissionAmount) private {     
         console.log("Paying the commission of amount %s ", commissionAmount);
-        (bool sent, bytes memory data) = Dao.call{value: commissionAmount}("");
+        (bool sent, ) = Dao.call{value: commissionAmount}("");
         require(sent, "Failed to send Ether for commision");      
         getBalance(); 
     }
-    /***
-    function transfer(address superGuardian) public {
-        require(balances[willUser] >= address(willUser).balance, "Insufficient funds");
-        emit Transfer(willUser, superGuardian, address(willUser).balance);
-        balances[willUser] -= address(willUser).balance;
-        balances[superGuardian] += address(willUser).balance;
-    }
 
+/**
     function shutdown(address superGuardian) private {
         require(msg.sender == superGuardian, "Access denied");
         require (isExpired() == true, "Not Expired");
         selfdestruct(payable(Dao));
     }
-    */
+*/
+
 }
