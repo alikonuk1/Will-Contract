@@ -1,3 +1,8 @@
+## Todo
+
+- [ ] Add ERC20 support
+- [ ] Disperse tokens
+
 # Setup
 
 You'll need the following:
