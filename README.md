@@ -1,7 +1,8 @@
 ## Todo
 
-- [ ] Add ERC20 support
+- [x] Add ERC20 support
 - [ ] Disperse tokens
+- [ ] Withdraw funds from thirdparty protocols
 
 # Setup
 
