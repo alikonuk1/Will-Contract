@@ -26,7 +26,7 @@ contract BaseTest is Test {
         factoryOwner = users[0];
         willUser = users[1];
         guardian = users[2];
-        user = users[3];
+        randomUser = users[3];
 
         // 
         vm.prank(factoryOwner);
