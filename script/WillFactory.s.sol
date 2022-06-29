@@ -8,8 +8,11 @@ import {WillFactory} from "src/WillFactory.sol";
 contract WillFactoryScript is Script {
     function setUp() public {}
 
+    address payable Dao;
+
     function run() public {
         vm.broadcast();
-        new WillFactory();
+        new WillFactory(Dao);
     }
+
 }

@@ -1,0 +1,19 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "linkReferences": {}
+  },
+  "ast": {
+    "absolutePath": "test/Will.t.sol",
+    "id": 22516,
+    "exportedSymbols": {},
+    "nodeType": "SourceUnit",
+    "src": "0:0:14"
+  },
+  "id": 14
+}

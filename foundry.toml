@@ -6,6 +6,7 @@ solc_version = '0.8.10'
 remappings = [
     '@ensdomains/=node_modules/@ensdomains/',
     'hardhat/=node_modules/hardhat/',
+    '@openzeppelin/=node_modules/@openzeppelin/'
 ]
  
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config

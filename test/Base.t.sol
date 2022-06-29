@@ -16,7 +16,8 @@ contract BaseTest is Test {
     address factoryOwner;
     address willUser;
     address guardian;
-    address user;
+    address nonUser;
+    address payable Dao;
 
     function setUp() public virtual {
         
@@ -26,11 +27,12 @@ contract BaseTest is Test {
         factoryOwner = users[0];
         willUser = users[1];
         guardian = users[2];
-        randomUser = users[3];
+        nonUser = users[3];
+        Dao = users[4];
 
         // 
         vm.prank(factoryOwner);
-        willFactory = new WillFactory();
+        willFactory = new WillFactory(Dao);
 
         assertEq(will.willUser(), willUser);
         assertEq(will.expiration(), 0);
