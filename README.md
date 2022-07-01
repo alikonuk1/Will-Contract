@@ -14,6 +14,8 @@ You'll need the following:
 
 ```shell
 forge install
+
+git submodule init && git submodule update
 ```
 
 ```shell
