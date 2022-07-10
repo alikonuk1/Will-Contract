@@ -15,6 +15,10 @@ contract Will {
     address public guardian;
     address public Dao;
 
+    receive() external payable {}
+
+    fallback() external payable {}
+
     struct guardianData {
         bool isGuardian; 
     }

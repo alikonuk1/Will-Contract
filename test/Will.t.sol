@@ -39,10 +39,21 @@ contract WillTest is Test {
     }
 
     function testDepositEther() public {
-        vm.prank(owner);
+        owner.call{value: 90 ether}("");
+        vm.startPrank(owner);
 
-        will.depositEther{value: 9 ether}();
+        emit log_string("owner balance before transfer:");
+        emit log_uint(address(owner).balance);
+
+//        will.depositEther{value: 9 ether}();
+        address(will).call{value: 9 ether}(abi.encode(address(owner)));
+        
+        emit log_string("owner balance after transfer:");
+        emit log_uint(address(owner).balance);
+        emit log_string("contract balance:" );
+        emit log_uint(address(will).balance);
 
         assertEq(address(will).balance, 9 ether);
+        vm.stopPrank();
     }
 }
