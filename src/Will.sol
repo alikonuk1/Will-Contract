@@ -4,6 +4,7 @@ pragma solidity ^0.8.10;
 import "forge-std/console.sol";
 
 import "./lib/IERC20.sol";
+import "./lib/SafeERC20.sol";
 
 contract Will {
 
@@ -80,7 +81,8 @@ contract Will {
     }
     
     // Deposit ETH
-    function deposit() public payable {}
+    function depositEther() external payable {
+    }
 
     // Check ERC20 balance of the contract
     function getTokenBalance(address _token) public view returns(uint256){ 
