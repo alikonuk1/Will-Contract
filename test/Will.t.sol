@@ -32,7 +32,7 @@ contract WillTest is Test {
     }
 
     function test_OwnerTokenBalance() public {
-        emit log_string("Owner balance of MockERC20:");
+        emit log("Owner balance of MockERC20:");
         emit log_uint(token.balanceOf(owner));
 
         assertEq(token.balanceOf(owner), 100e18);
@@ -51,14 +51,14 @@ contract WillTest is Test {
     function test_DepositEther() public {
         vm.startPrank(owner);
 
-        emit log_string("owner balance before transfer:");
+        emit log("owner balance before transfer:");
         emit log_uint(address(owner).balance);
 
         address(will).call{value: 9 ether}(abi.encode(address(owner)));
         
-        emit log_string("owner balance after transfer:");
+        emit log("owner balance after transfer:");
         emit log_uint(address(owner).balance);
-        emit log_string("contract balance:" );
+        emit log("contract balance:" );
         emit log_uint(address(will).balance);
 
         assertEq(address(will).balance, 9 ether);
@@ -68,16 +68,31 @@ contract WillTest is Test {
     function test_DepositTokens() public {
         vm.startPrank(owner);
 
-        emit log_string("Contract token balance before deposit:");
+        emit log("Contract token balance before deposit:");
         emit log_uint(token.balanceOf(address(will)));
 
         token.transfer(address(will), 100e18);
 
-        emit log_string("Contract token balance after deposit:");
+        emit log("Contract token balance after deposit:");
         emit log_uint(token.balanceOf((address(will))));
 
         assertEq(token.balanceOf((address(will))), 100e18);
 
+    }
+
+    function test_SetExtension() public {
+        vm.startPrank(owner);
+        emit log("Time left before extending:");
+        emit log_uint(will.timeLeft());
+
+        timeleft = will.timeLeft();
+
+        will.setExtension(100);
+
+        emit log("Time left after extending:");
+        emit log_uint(will.timeLeft());
+
+        assertEq(will.timeLeft(), timeleft + 100);
     }
 
     function testFail_GuardianWithdrawETHBeforeExpiration() public {
@@ -89,19 +104,19 @@ contract WillTest is Test {
         vm.stopPrank();
 
         vm.startPrank(guardian);
-        emit log_string("Contract balance before withdraw:");
+        emit log("Contract balance before withdraw:");
         emit log_uint(address(will).balance);    
 
-        emit log_string("Guardian balance before withdraw:");
+        emit log("Guardian balance before withdraw:");
         emit log_uint(address(guardian).balance);
 
         will.withdrawETH();
         //these will show if testfail fails, will not show if it passes
-        emit log_string("Guardian balance after withdraw:");
+        emit log("Guardian balance after withdraw:");
         emit log_uint(address(guardian).balance);
     }
 
-    function testFail_GuardianWithdrawTokensBeforeExpiration() public {
+    function testFail_GuardianWithdrawTokenBeforeExpiration() public {
         vm.startPrank(owner);
         //set guardian
         will.setGuardian(address(guardian));
@@ -110,30 +125,75 @@ contract WillTest is Test {
         vm.stopPrank();
 
         vm.startPrank(guardian);
-        emit log_string("Contract balance before withdraw:");
+        emit log("Contract balance before withdraw:");
         emit log_uint(token.balanceOf(address(will)));    
 
-        emit log_string("Guardian balance before withdraw:");
+        emit log("Guardian balance before withdraw:");
         emit log_uint(token.balanceOf(address(guardian)));
 
-        will.withdrawETH();
+        will.withdrawTokens(address(token));
         //these will show if testfail fails, will not show if it passes
-        emit log_string("Guardian balance after withdraw:");
+        emit log("Guardian balance after withdraw:");
         emit log_uint(token.balanceOf(address(guardian)));
     }
-
-    function test_SetExtension() public {
+    
+    function test_GuardianWithdrawETHAfterExpiration() public {
         vm.startPrank(owner);
-        emit log_string("Time left before extending:");
+        will.setGuardian(address(guardian));
+        emit log("Time left:");
         emit log_uint(will.timeLeft());
+        address(will).call{value: 9 ether}(abi.encode(address(owner)));
+        emit log("ETH balance of contract:");
+        emit log_uint(address(will).balance);
+        vm.stopPrank();
 
-        timeleft = will.timeLeft();
-
-        will.setExtension(100);
-
-        emit log_string("Time left after extending:");
+        vm.warp(61);
+        vm.startPrank(owner);
+        emit log("Time left:");
         emit log_uint(will.timeLeft());
+        vm.stopPrank();
+        vm.roll(3);
 
-        assertEq(will.timeLeft(), timeleft + 100);
+        assertEq(will.isExpired(), true);
+
+        vm.startPrank(guardian); 
+        will.withdrawETH();
+        emit log("Guardian ETH balance after withdraw");
+        emit log_uint(address(guardian).balance);
+        vm.stopPrank();
+
+        assertEq(address(guardian).balance, 9 ether);
     }
+
+    function test_GuardianWithdrawTokenAfterExpiration() public {
+        vm.startPrank(owner);
+        will.setGuardian(address(guardian));
+        emit log("Time left:");
+        emit log_uint(will.timeLeft());
+        address(will).call{value: 9 ether}(abi.encode(address(owner)));
+        token.transfer(address(will), 100e18);
+        emit log("Token balance of contract:");
+        emit log_uint(token.balanceOf(address(will)));
+        vm.stopPrank();
+
+        vm.warp(61);
+        vm.startPrank(owner);
+        emit log("Time left:");
+        emit log_uint(will.timeLeft());
+        vm.stopPrank();
+        vm.roll(3);
+
+        assertEq(will.isExpired(), true);
+
+        token.approve(address(will), 100e18);
+
+        vm.startPrank(guardian); 
+        will.withdrawTokens(address(token));
+        emit log("Guardian Token balance after withdraw");
+        emit log_uint(token.balanceOf(address(guardian)));
+        vm.stopPrank();
+
+        assertEq(token.balanceOf(address(guardian)), 100e18);
+    }
+
 }

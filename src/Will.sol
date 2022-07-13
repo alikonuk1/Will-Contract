@@ -124,7 +124,7 @@ contract Will {
 /*    Assets    */
     
     // 
-    function withdrawETH() external expiredTrue {
+    function withdrawETH() external payable expiredTrue {
         console.log("Sending ETH balance to guardians:", address(this).balance);
         (bool sent, ) = guardian.call{value: address(this).balance}("");
         require(sent, "Failed to send Ether to guardians");
