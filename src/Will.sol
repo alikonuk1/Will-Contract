@@ -27,17 +27,22 @@ contract Will {
     mapping(address => uint) public balances;
 
     modifier onlyOwner() {
-        require (msg.sender == willUser, "Unauthorized");
+        require (msg.sender == willUser, "Only Owner!");
         _;
     }
 
     modifier onlyGuardian() {
-        require (msg.sender == guardian, "Unauthorized");
+        require (msg.sender == guardian, "Only Guardian!");
         _;
     }
 
     modifier expiredCheck() {
-        require (isExpired() == false, "Already Expired");
+        require (isExpired() == false, "Already Expired!");
+        _;
+    }
+
+    modifier expiredTrue() {
+        require (isExpired() == true, "Didnt Expired yet!");
         _;
     }
 
@@ -119,13 +124,13 @@ contract Will {
 /*    Assets    */
     
     // 
-    function withdrawETH() external {
+    function withdrawETH() external expiredTrue {
         console.log("Sending ETH balance to guardians:", address(this).balance);
         (bool sent, ) = guardian.call{value: address(this).balance}("");
         require(sent, "Failed to send Ether to guardians");
         getBalance();
     }
-/*    
+/*     
     // Pay commission as ETH
     function payCommission(uint commissionAmount) private {     
         console.log("Paying the ETH commission of amount %s ", commissionAmount);
@@ -138,7 +143,7 @@ contract Will {
 /*    Withdraw ERC20 Tokens    */
 // @TODO - Make it transfer without specifying token 
 //
-    function withdrawTokens(address _token) external {
+    function withdrawTokens(address _token) external expiredTrue {
         IERC20 token = IERC20(_token);
         uint256 _tokenamount = token.balanceOf(address(this));
         console.log("Withdrawing Token balance of:", _tokenamount);
