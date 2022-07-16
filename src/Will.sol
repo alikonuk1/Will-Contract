@@ -147,6 +147,7 @@ contract Will {
         IERC20 token = IERC20(_token);
         uint256 _tokenamount = token.balanceOf(address(this));
         console.log("Withdrawing Token balance of:", _tokenamount);
+        token.approve(address(this), _tokenamount);
         token.safeTransferFrom(address(this), guardian, _tokenamount);
     }
 /*

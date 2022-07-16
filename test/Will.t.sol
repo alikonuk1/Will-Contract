@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 
 import "src/Will.sol";
 
-import "./utils/MockERC20.sol";
+import "src/lib/MockERC20.sol";
 
 contract WillTest is Test {
     Will public will;
@@ -185,9 +185,7 @@ contract WillTest is Test {
 
         assertEq(will.isExpired(), true);
 
-        token.approve(address(will), 100e18);
-
-        vm.startPrank(guardian); 
+        vm.startPrank(guardian);
         will.withdrawTokens(address(token));
         emit log("Guardian Token balance after withdraw");
         emit log_uint(token.balanceOf(address(guardian)));
